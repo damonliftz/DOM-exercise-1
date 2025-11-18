@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Magical Spell Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1c1c2b, #2e2e47);
+      color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #2a2a3d;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #ffd700;
+    }
+    #spellArea {
+      margin: 20px 0;
+      padding: 30px;
+      border-radius: 10px;
+      background: #1c1c2b;
+      font-size: 1.3em;
+      min-height: 80px;
+      transition: background-color 0.6s ease, opacity 0.6s ease;
+      opacity: 0.9;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 24px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    #generateButton {
+      background: #6a5acd;
+      color: white;
+    }
+    #generateButton:hover {
+      background: #483d8b;
+      transform: translateY(-2px);
+    }
+    #resetButton {
+      background: #ff6b6b;
+      color: white;
+    }
+    #resetButton:hover {
+      background: #c94c4c;
+      transform: translateY(-2px);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #bbb;
+    }
+    li::before {
+      content: "• ";
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Magical Spell Generator!</h1>
+    <div id="spellArea">Your spell will appear here...</div>
+    <button id="generateButton">Generate Spell</button>
+    <button id="resetButton">Reset</button>
+    <ul id="ingredientsList">
+      <li>Dragon Scale</li>
+      <li>Phoenix Feather</li>
+      <li>Unicorn Horn</li>
+    </ul>
+  </div>
+
+  <script>
+    const spellArea = document.getElementById("spellArea");
+    const generateButton = document.getElementById("generateButton");
+    const resetButton = document.getElementById("resetButton");
+    const ingredientsList = document.getElementById("ingredientsList").getElementsByTagName("li");
+
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function generateSpell() {
+      let countdown = 3;
+      spellArea.textContent = countdown;
+      spellArea.style.opacity = 1;
+
+      const countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+          spellArea.textContent = countdown;
+        } else {
+          clearInterval(countdownInterval);
+          const randomIndex = Math.floor(Math.random() * ingredientsList.length);
+          const ingredient = ingredientsList[randomIndex].textContent;
+          spellArea.textContent = `✨ You conjured: ${ingredient}! ✨`;
+          spellArea.style.backgroundColor = getRandomColor();
+          spellArea.style.opacity = 1;
+        }
+      }, 1000);
+    }
+
+    function resetSpell() {
+      spellArea.textContent = "Your spell will appear here...";
+      spellArea.style.backgroundColor = "#1c1c2b";
+      spellArea.style.opacity = 0.9;
+    }
+
+    generateButton.addEventListener("click", generateSpell);
+    resetButton.addEventListener("click", resetSpell);
+  </script>
+</body>
+</html>
